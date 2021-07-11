@@ -19,8 +19,8 @@ type Dispatcher struct {
 	OnlyPrimaryDNS bool
 
 	WhenPrimaryDNSAnswerNoneUse string
-	IPNetworkPrimaryList        []*net.IPNet
-	IPNetworkAlternativeList    []*net.IPNet
+	IPNetworkPrimaryList        common.IPNetList
+	IPNetworkAlternativeList    common.IPNetList
 	DomainPrimaryList           matcher.Matcher
 	DomainAlternativeList       matcher.Matcher
 	RedirectIPv6Record          bool

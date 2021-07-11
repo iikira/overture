@@ -11,6 +11,7 @@ import (
 	"io/ioutil"
 	"net"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -52,8 +53,8 @@ type Config struct {
 	DomainPrimaryList           matcher.Matcher
 	DomainAlternativeList       matcher.Matcher
 	WhenPrimaryDNSAnswerNoneUse string
-	IPNetworkPrimaryList        []*net.IPNet
-	IPNetworkAlternativeList    []*net.IPNet
+	IPNetworkPrimaryList        common.IPNetList
+	IPNetworkAlternativeList    common.IPNetList
 	Hosts                       *hosts.Hosts
 	Cache                       *cache.Cache
 }
@@ -244,8 +245,8 @@ func initDomainMatcher(file string, name string) (m matcher.Matcher) {
 	return
 }
 
-func getIPNetworkList(file string) []*net.IPNet {
-	ipNetList := make([]*net.IPNet, 0)
+func getIPNetworkList(file string) common.IPNetList {
+	ipNetList := make(common.IPNetList, 0)
 
 	f, err := os.Open(file)
 	if err != nil {
@@ -301,5 +302,6 @@ func getIPNetworkList(file string) []*net.IPNet {
 		}
 	}
 
+	sort.Sort(ipNetList) // sort
 	return ipNetList
 }
